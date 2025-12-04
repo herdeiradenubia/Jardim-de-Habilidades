@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jardim de Habilidades</title>
+  <style>
+    :root{
+      --card-bg: rgba(255,255,255,0.9);
+      --accent: #6b4b9b;
+    }
+
+    body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background:
+    
+    radial-gradient(circle at 25% 30%, #7acb63 0%, #63a94f 45%, transparent 70%),
+    radial-gradient(circle at 70% 20%, #6fc45d 0%, #5ca653 50%, transparent 70%),
+    radial-gradient(circle at 30% 75%, #74c968 0%, #5fa754 45%, transparent 70%),
+    radial-gradient(circle at 80% 70%, #6bc45a 0%, #569a47 50%, transparent 70%),
+
+    
+    repeating-linear-gradient(
+      90deg,
+      rgba(40,80,40,0.12) 0px,
+      rgba(40,80,40,0.12) 2px,
+      rgba(70,120,70,0.12) 2px,
+      rgba(70,120,70,0.12) 4px
+    ),
+
+    
+    linear-gradient(#64a94e, #5a9d47);
+}
+
+    h1 {
+      color: var(--accent);
+      margin-bottom: 6px;
+      text-shadow: 0 2px 8px rgba(107,75,155,0.15);
+    }
+
+    p.lead {
+      color: #444;
+      margin-bottom: 18px;
+    }
+
+    .garden {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 980px;
+      z-index: 2;
+    }
+
+    .flower {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(20,30,40,0.08);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      animation: bloom 0.6s ease-out;
+    }
+
+    .flower:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(20,30,40,0.12);
+    }
+
+    .emoji {
+      font-size: 36px;
+      margin-bottom: 8px;
+      display: inline-block;
+      animation: sway 3.6s ease-in-out infinite;
+    }
+
+    .name {
+      font-weight: 700;
+      color: #2f4f2f;
+      margin-bottom: 6px;
+    }
+
+    .skill-box {
+      display: none;
+      margin-top: 10px;
+      background: rgba(240,255,240,0.9);
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #164a2a;
+      animation: bloom 0.4s ease-out;
+      text-align: left;
+    }
+
+    
+    @keyframes skyFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    
+    @keyframes bloom {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes sway {
+      0% { transform: rotate(-2deg); }
+      50% { transform: rotate(3deg); }
+      100% { transform: rotate(-2deg); }
+    }
+
+    
+    .flower::before {
+      content: "";
+      position: absolute;
+      top: -40%; left: -40%; width: 180%; height: 180%;
+      background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 60%);
+      animation: pulseGlow 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes pulseGlow {
+      0%,100%{ transform: scale(0.7); opacity: 0.3 }
+      50% { transform: scale(1); opacity: 1 }
+    }
+
+    
+    .sparkle { position: absolute; width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; box-shadow: 0 0 10px rgba(255,255,255,0.95); top: -10px; pointer-events: none; z-index:1 }
+
+    
+    .butterfly {
+      position: absolute;
+      font-size: 2.6rem;
+      pointer-events: none;
+      transition: transform 1.6s cubic-bezier(.22,.9,.3,1), color 1s ease, filter 1s ease;
+      z-index: 3;
+      left: 10vw; top: 10vh;
+      transform-origin: center;
+    }
+
+    
+    @media (max-width:520px){ .emoji{font-size:28px} .butterfly{font-size:2rem} }
+  </style>
+</head>
+<body>
+  <h1>🌼 Jardim de Habilidades</h1>
+  <p class="lead">Clique em uma flor!</p>
+
+  <div class="garden" id="garden"></div>
+
+ 
+  <div class="butterfly" id="butterfly">🦋</div>
+
+  <script>
+    
+    const pessoas = [
+      { nome: "Pessoa 1",  curiosa: "Habilidade Curiosa 1", emoji: "🌸" },
+      { nome: "Pessoa 2",  curiosa: "Habilidade Curiosa 2", emoji: "🌼" },
+      { nome: "Pessoa 3",  curiosa: "Habilidade Curiosa 3", emoji: "🌻" },
+      { nome: "Pessoa 4",  curiosa: "Habilidade Curiosa 4", emoji: "🌺" },
+      { nome: "Pessoa 5",  curiosa: "Habilidade Curiosa 5", emoji: "🌷" },
+      { nome: "Pessoa 6",  curiosa: "Habilidade Curiosa 6", emoji: "🌹" },
+      { nome: "Pessoa 7",  curiosa: "Habilidade Curiosa 7", emoji: "🥀" },
+      { nome: "Pessoa 8",  curiosa: "Habilidade Curiosa 8", emoji: "💐" },
+      { nome: "Pessoa 9",  curiosa: "Habilidade Curiosa 9", emoji: "🏵️" },
+      { nome: "Pessoa 10",  curiosa: "Habilidade Curiosa 10", emoji: "💮" },
+      { nome: "Pessoa 11",  curiosa: "Habilidade Curiosa 11", emoji: "🌾" },
+      { nome: "Pessoa 12",  curiosa: "Habilidade Curiosa 12", emoji: "🌱" },
+      { nome: "Pessoa 13",  curiosa: "Habilidade Curiosa 13", emoji: "🌿" },
+      { nome: "Pessoa 14",  curiosa: "Habilidade Curiosa 14", emoji: "🍃" },
+      { nome: "Pessoa 15",  curiosa: "Habilidade Curiosa 15", emoji: "🍀" },
+      { nome: "Pessoa 16",  curiosa: "Habilidade Curiosa 16", emoji: "🎋" },
+      { nome: "Pessoa 17",  curiosa: "Habilidade Curiosa 17", emoji: "🎍" },
+      { nome: "Pessoa 18",  curiosa: "Habilidade Curiosa 18", emoji: "🌴" },
+      { nome: "Pessoa 19",  curiosa: "Habilidade Curiosa 19", emoji: "🌵" },
+      { nome: "Pessoa 20",  curiosa: "Habilidade Curiosa 20", emoji: "🌳" },
+      { nome: "Pessoa 21",  curiosa: "Habilidade Curiosa 21", emoji: "🌲" },
+      { nome: "Pessoa 22",  curiosa: "Habilidade Curiosa 22", emoji: "🪴" },
+      { nome: "Pessoa 23",  curiosa: "Habilidade Curiosa 23", emoji: "🪷" },
+      { nome: "Pessoa 24",  curiosa: "Habilidade Curiosa 24", emoji: "🍁" },
+      { nome: "Pessoa 25",  curiosa: "Habilidade Curiosa 25", emoji: "🌺" }
+    ];
+
+    const garden = document.getElementById('garden');
+
+    pessoas.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'flower';
+      card.innerHTML = `
+        <div class="emoji">${p.emoji}</div>
+        <div class="name">${p.nome}</div>
+        <div class="skill-box">
+          <p><strong>Habilidade:</strong> ${p.curiosa}</p>
+        </div>
+      `;
+
+      
+      card.addEventListener('click', () => {
+        const box = card.querySelector('.skill-box');
+        const currently = box.style.display === 'block';
+        
+        document.querySelectorAll('.skill-box').forEach(b => b.style.display = 'none');
+        box.style.display = currently ? 'none' : 'block';
+      });
+
+      garden.appendChild(card);
+    });
+
+    
+    function makeSparkles(n = 10){
+      for(let i=0;i<n;i++){
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = Math.random()*100 + 'vw';
+        s.style.top = Math.random()*-20 + 'vh';
+        s.style.opacity = (0.4 + Math.random()*0.9).toString();
+        const dur = 6 + Math.random()*6;
+        s.style.animation = `fall ${dur}s linear ${Math.random()*3}s infinite`;
+        document.body.appendChild(s);
+      }
+    }
+    
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `@keyframes fall { 0% { transform: translateY(-10px) translateX(0); opacity:1 } 100% { transform: translateY(120vh) translateX(30px); opacity:0 } }`;
+    document.head.appendChild(styleSheet);
+    makeSparkles(14);
+
+    
+    const butterfly = document.getElementById('butterfly');
+    function flyTo(x,y){
+      
+      butterfly.style.left = (x - 24) + 'px';
+      butterfly.style.top = (y - 24) + 'px';
+      
+      const rot = (Math.random()*40 - 20);
+      butterfly.style.transform = `translate(0,0) rotate(${rot}deg)`;
+    }
+
+    function randomPos(){
+      return {
+        x: 80 + Math.random()*(window.innerWidth - 160),
+        y: 40 + Math.random()*(window.innerHeight - 120)
+      };
+    }
+
+    
+    let target = randomPos();
+    flyTo(target.x, target.y);
+
+    setInterval(()=>{
+      target = randomPos();
+      flyTo(target.x, target.y);
+      
+      const colors = ['#ff9ecd', '#ffd86b', '#b5f5ff', '#d9b6ff', '#a4ffb0'];
+      const color = colors[Math.floor(Math.random()*colors.length)];
+      butterfly.style.color = color;
+      butterfly.style.filter = `drop-shadow(0 0 12px ${color})`;
+    }, 2000);
+
+    
+    let bx = parseFloat(butterfly.style.left) || 100;
+    let by = parseFloat(butterfly.style.top) || 100;
+    function tick(){
+      const tx = (typeof target.x === 'number')? target.x : bx;
+      const ty = (typeof target.y === 'number')? target.y : by;
+      bx += (tx - bx) * 0.04; 
+      by += (ty - by) * 0.04;
+      butterfly.style.left = (bx - 24) + 'px';
+      butterfly.style.top = (by - 24) + 'px';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    
+    window.addEventListener('resize', ()=>{ target = randomPos(); });
+  
+    document.addEventListener("mousemove", (e) => {
+      const bx = butterfly.getBoundingClientRect().left + 24;
+      const by = butterfly.getBoundingClientRect().top + 24;
+
+      const dist = Math.hypot(e.clientX - bx, e.clientY - by);
+
+      if (dist < 120) { 
+        const angle = Math.atan2(by - e.clientY, bx - e.clientX);
+        const fleeX = bx + Math.cos(angle) * 200;
+        const fleeY = by + Math.sin(angle) * 200;
+
+        target.x = Math.min(window.innerWidth - 60, Math.max(40, fleeX));
+        target.y = Math.min(window.innerHeight - 60, Math.max(40, fleeY));
+      }
+    });
+  </script>
+</body>
+</html>
