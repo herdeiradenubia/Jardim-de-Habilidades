@@ -20,7 +20,7 @@
   align-items: center;
   text-align: center;
   background:
-    
+  
     radial-gradient(circle at 25% 30%, #7acb63 0%, #63a94f 45%, transparent 70%),
     radial-gradient(circle at 70% 20%, #6fc45d 0%, #5ca653 50%, transparent 70%),
     radial-gradient(circle at 30% 75%, #74c968 0%, #5fa754 45%, transparent 70%),
@@ -35,14 +35,13 @@
       rgba(70,120,70,0.12) 4px
     ),
 
-    
     linear-gradient(#64a94e, #5a9d47);
 }
 
     h1 {
-      color: var(--accent);
+      color: #ee3542;
       margin-bottom: 6px;
-      text-shadow: 0 2px 8px rgba(107,75,155,0.15);
+      text-shadow: 0 2px 8px rgba(182, 27, 21, 0.15);
     }
 
     p.lead {
@@ -154,27 +153,27 @@
   </style>
 </head>
 <body>
-  <h1>🌼 Jardim de Habilidades</h1>
+  <h1>🌼 Jardim da Wesow</h1>
   <p class="lead">Clique em uma flor!</p>
 
   <div class="garden" id="garden"></div>
 
- 
+  
   <div class="butterfly" id="butterfly">🦋</div>
 
   <script>
     
     const pessoas = [
-      { nome: "Pessoa 1",  curiosa: "Habilidade Curiosa 1", emoji: "🌸" },
-      { nome: "Pessoa 2",  curiosa: "Habilidade Curiosa 2", emoji: "🌼" },
-      { nome: "Pessoa 3",  curiosa: "Habilidade Curiosa 3", emoji: "🌻" },
-      { nome: "Pessoa 4",  curiosa: "Habilidade Curiosa 4", emoji: "🌺" },
-      { nome: "Pessoa 5",  curiosa: "Habilidade Curiosa 5", emoji: "🌷" },
-      { nome: "Pessoa 6",  curiosa: "Habilidade Curiosa 6", emoji: "🌹" },
+      { nome: "Pessoa 1",  curiosa: "Quando não consigo entender algo, preciso escrever/desenhar para entrar na cabeça", emoji: "🌸" },
+      { nome: "Pessoa 2",  curiosa: "Eu tenho fóbia de galinha", emoji: "🌼" },
+      { nome: "Pessoa 3",  curiosa: "Não sei andar de bicicleta", emoji: "🌻" },
+      { nome: "Pessoa 4",  curiosa: "Tenho 9 tatuagens", emoji: "🌺" },
+      { nome: "Pessoa 5",  curiosa: "Eu já quebrei os dois braços de uma vez fazendo trilha de moto", emoji: "🌷" },
+      { nome: "Pessoa 6",  curiosa: "Meu cantor preferido é o Felipe Ret", emoji: "🌹" },
       { nome: "Pessoa 7",  curiosa: "Habilidade Curiosa 7", emoji: "🥀" },
-      { nome: "Pessoa 8",  curiosa: "Habilidade Curiosa 8", emoji: "💐" },
-      { nome: "Pessoa 9",  curiosa: "Habilidade Curiosa 9", emoji: "🏵️" },
-      { nome: "Pessoa 10",  curiosa: "Habilidade Curiosa 10", emoji: "💮" },
+      { nome: "Pessoa 8",  curiosa: "Sou muito metódico", emoji: "💐" },
+      { nome: "Pessoa 9",  curiosa: "Sou uma pessima motorista", emoji: "🏵️" },
+      { nome: "Pessoa 10",  curiosa: "Tenho um irmão 10 anos mais novo que eu", emoji: "💮" },
       { nome: "Pessoa 11",  curiosa: "Habilidade Curiosa 11", emoji: "🌾" },
       { nome: "Pessoa 12",  curiosa: "Habilidade Curiosa 12", emoji: "🌱" },
       { nome: "Pessoa 13",  curiosa: "Habilidade Curiosa 13", emoji: "🌿" },
@@ -201,7 +200,7 @@
         <div class="emoji">${p.emoji}</div>
         <div class="name">${p.nome}</div>
         <div class="skill-box">
-          <p><strong>Habilidade:</strong> ${p.curiosa}</p>
+          <p><strong>Curiosidade:</strong> ${p.curiosa}</p>
         </div>
       `;
 
@@ -303,4 +302,3 @@
   </script>
 </body>
 </html>
-
